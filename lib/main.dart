@@ -1,0 +1,30 @@
+import 'package:car_fix/pages/login/login_module.dart';
+import 'package:car_fix/pages/pre_login/pre_login_module.dart';
+import 'package:car_fix/pages/signup_client/signup_client_module.dart';
+import 'package:car_fix/pages/signup_service_provider/signup_service_provider_module.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "Car fix",
+      getPages: [
+        ...PreLoginModule().routers,
+        ...LoginModule().routers,
+        ...SignUpClientModule().routers,
+        ...SignUpServiceProviderModule().routers,
+      ],
+      builder: EasyLoading.init(),
+    );
+  }
+}
