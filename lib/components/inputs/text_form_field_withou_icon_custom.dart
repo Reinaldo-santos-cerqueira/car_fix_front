@@ -1,15 +1,13 @@
 import 'package:car_fix/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class TextFormFieldCustom extends StatelessWidget {
-  final IconData? icon;
+class TextFormWithoutIconFieldCustom extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final validator;
 
-  const TextFormFieldCustom({
+  const TextFormWithoutIconFieldCustom({
     super.key,
-    required this.icon,
     required this.hintText,
     required this.controller,
     required this.validator,
@@ -22,14 +20,13 @@ class TextFormFieldCustom extends StatelessWidget {
         color: ColorsProject.grayContrast,
         borderRadius: BorderRadius.circular(5),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
         style: const TextStyle(
           color: ColorsProject.buttonPrimary,
         ),
         controller: controller,
         decoration: InputDecoration(
-          icon: Icon(icon, color: ColorsProject.buttonPrimary),
           hintText: hintText,
           hintStyle: const TextStyle(
             color: ColorsProject.gray3,

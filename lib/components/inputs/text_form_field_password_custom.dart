@@ -5,12 +5,14 @@ class TextFormFieldPasswordCustom extends StatefulWidget {
   final IconData icon;
   final String hintText;
   final TextEditingController controller;
-
+  final validator;
+  
   const TextFormFieldPasswordCustom({
     super.key,
     required this.icon,
     required this.hintText,
     required this.controller,
+    required this.validator,
   });
 
   @override
@@ -58,6 +60,7 @@ class _TextFormFieldPasswordCustomState
             onPressed: _togglePasswordVisibility,
           ),
         ),
+        validator: widget.validator,
       ),
     );
   }
