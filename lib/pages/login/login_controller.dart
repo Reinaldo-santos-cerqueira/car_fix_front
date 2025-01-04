@@ -5,10 +5,16 @@ class LoginController extends GetxController {
   TextEditingController textEditingControllerPassword = TextEditingController();
   TextEditingController textEditingControllerEmail = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  var type = "".obs;
+
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    type(Get.parameters['type']);
+  }
 
   void goSignUp(){
-    var type = Get.parameters['type'];
-    if(type == 'client'){
+    if(type.value == 'client'){
       Get.toNamed('/signup_client');
     }else {
       Get.toNamed('/signup_service_provider');
