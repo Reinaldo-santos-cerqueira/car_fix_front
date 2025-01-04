@@ -20,7 +20,7 @@ class OutlinedButtonCustom extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             side: const BorderSide(
               color: ColorsProject.buttonPrimary,
               width: 2,
