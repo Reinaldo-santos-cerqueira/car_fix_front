@@ -10,4 +10,6 @@ class ColorsProject {
 
   static const gray4 = Color(0xFFF4F5F7);
   static const grayContrast = Color(0xFF292929);
+  static const greenPrimary = Color(0xFF01B2A0);
+  static const redPrimary  = Color.fromARGB(255, 255, 48, 48);
 }
