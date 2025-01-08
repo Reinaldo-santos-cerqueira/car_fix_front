@@ -2,6 +2,7 @@ import 'package:car_fix/components/inputs/text_form_field_custom.dart';
 import 'package:car_fix/components/inputs/text_form_field_password_custom.dart';
 import 'package:car_fix/components/inputs/text_form_field_withou_icon_custom.dart';
 import 'package:car_fix/components/pickers/picker_image.dart';
+import 'package:car_fix/utils/masks.dart';
 import 'package:car_fix/utils/validator_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:validatorless/validatorless.dart';
@@ -39,6 +40,22 @@ class StepsFormPersonal extends StatelessWidget {
               [
                 Validatorless.email("Digite um email valido"),
                 Validatorless.required("Email é obrigatorio")
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFormFieldCustom(
+            controller: controller.textEditingControllerPhoneNumber,
+            textInputType: TextInputType.number,
+            icon: Icons.phone,
+            maskFormatter: [maskFormatterPhone],
+            hintText: 'Digite seu telefone',
+            validator: Validatorless.multiple(
+              [
+                Validatorless.phone("Insira um telefone valido"),
+                Validatorless.required("Insira um telefone valido")
               ],
             ),
           ),
@@ -91,8 +108,8 @@ class StepsFormPersonal extends StatelessWidget {
                       controller: controller.textEditingControllerCnh,
                       hintText: 'Digite sua cnh',
                       validator: Validatorless.multiple([
-                        Validatorless.min(9, "Digite uma cnh valida"),
-                        Validatorless.max(9, "Digite uma cnh valida"),
+                        Validatorless.min(11, "Digite uma cnh valida"),
+                        Validatorless.max(11, "Digite uma cnh valida"),
                         Validatorless.required("Cnh é obrigatorio")
                       ]),
                     ),
