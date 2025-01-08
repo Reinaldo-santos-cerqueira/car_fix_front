@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 class PrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
-
+  final bool loading;
   const PrimaryButton({
     super.key,
     required this.onPressed,
     required this.text,
-  });
+    loading = false
+  }): loading = loading ? loading : false;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: loading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorsProject.buttonPrimary,
           shape: RoundedRectangleBorder(
@@ -26,7 +27,7 @@ class PrimaryButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Text(
-            text.toUpperCase(),
+            loading ? "Carregando..." : text.toUpperCase(),
             style: const TextStyle(
               color: ColorsProject.blackPrimary,
               fontSize: 18,
