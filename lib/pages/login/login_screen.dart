@@ -8,6 +8,7 @@ import 'package:car_fix/pages/login/login_controller.dart';
 import 'package:car_fix/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:validatorless/validatorless.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
@@ -24,20 +25,30 @@ class LoginScreen extends GetView<LoginController> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Expanded(
-                  child:  Container(),
+                  child: Container(),
                 ),
                 TextFormFieldCustom(
                   controller: controller.textEditingControllerEmail,
                   hintText: "Digite seu email",
-                  icon: Icons.mail,
+                  icon: Icons.mail, 
+                  validator: Validatorless.multiple([
+                    Validatorless.email("Digite um email valido"),
+                    Validatorless.required("Email é requirido'")
+                  ]),
                 ),
                 const SizedBox(
+                  
                   height: 20,
                 ),
                 TextFormFieldPasswordCustom(
                   controller: controller.textEditingControllerPassword,
                   hintText: "Digite sua senha",
                   icon: Icons.lock,
+                  validator: Validatorless.regex(
+                    RegExp(
+                        r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$'),
+                    "Digite uma senha válida",
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
