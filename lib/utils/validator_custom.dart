@@ -12,3 +12,15 @@ String? validateCPFouCNPJ(String? value) {
 
   return null;
 }
+
+String? validateCep(String? value) {
+  if (value != null) {
+    String valueWithoutPoint = value.replaceAll(".", "");
+    String valueFormated = valueWithoutPoint.replaceAll("-", "");
+    if (valueFormated.length == 8) {
+      return null;
+    }
+    return "Digite um cep valido";
+  }
+  return "Digite um cep valido";
+}
