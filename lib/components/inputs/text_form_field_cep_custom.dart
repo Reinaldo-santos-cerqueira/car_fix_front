@@ -6,7 +6,7 @@ class TextFormFieldCepCustom extends StatefulWidget {
   final TextEditingController controller;
   final validator;
   final FocusNode focusNode;
-  final Function fetchCep;
+  final VoidCallback fetchCep;
   const TextFormFieldCepCustom({
     super.key,
     required this.hintText,
@@ -22,17 +22,25 @@ class TextFormFieldCepCustom extends StatefulWidget {
 
 class _TextFormFieldCepCustomState extends State<TextFormFieldCepCustom> {
   @override
-  Widget build(BuildContext context) {
-    @override
-    void initState() {
-      super.initState();
-      widget.focusNode.addListener(() {
-        if (!widget.focusNode.hasFocus) {
-          widget.fetchCep(widget.controller);
-        }
-      });
-    }
+  void initState() {
+    super.initState();
+    widget.focusNode.addListener(_onFocusChange);
+  }
 
+  @override
+  void dispose() {
+    widget.focusNode.removeListener(_onFocusChange);
+    super.dispose();
+  }
+
+  void _onFocusChange() {
+    if (!widget.focusNode.hasFocus) {
+      widget.fetchCep();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: ColorsProject.grayContrast,
@@ -40,10 +48,12 @@ class _TextFormFieldCepCustomState extends State<TextFormFieldCepCustom> {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
+        keyboardType: TextInputType.number,
         style: const TextStyle(
           color: ColorsProject.buttonPrimary,
         ),
         controller: widget.controller,
+        focusNode: widget.focusNode,
         decoration: InputDecoration(
           hintText: widget.hintText,
           hintStyle: const TextStyle(

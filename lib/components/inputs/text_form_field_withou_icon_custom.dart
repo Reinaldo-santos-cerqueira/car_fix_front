@@ -1,16 +1,21 @@
 import 'package:car_fix/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFormWithoutIconFieldCustom extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final validator;
+  final TextInputType? textInputType;
+  final List<TextInputFormatter>? maskFormatter;
 
   const TextFormWithoutIconFieldCustom({
     super.key,
     required this.hintText,
     required this.controller,
     required this.validator,
+    this.textInputType,
+    this.maskFormatter,
   });
 
   @override
@@ -22,6 +27,7 @@ class TextFormWithoutIconFieldCustom extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
+        keyboardType: textInputType ?? TextInputType.text,
         style: const TextStyle(
           color: ColorsProject.buttonPrimary,
         ),

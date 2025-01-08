@@ -1,18 +1,23 @@
 import 'package:car_fix/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFormFieldCustom extends StatelessWidget {
   final IconData? icon;
   final String hintText;
   final TextEditingController controller;
-  final validator;
-
+  final String? Function(String?)? validator;
+  final TextInputType? textInputType;
+  final List<TextInputFormatter>? maskFormatter;
+  
   const TextFormFieldCustom({
     super.key,
     required this.icon,
     required this.hintText,
     required this.controller,
     required this.validator,
+    this.textInputType,
+    this.maskFormatter,
   });
 
   @override
@@ -27,7 +32,9 @@ class TextFormFieldCustom extends StatelessWidget {
         style: const TextStyle(
           color: ColorsProject.buttonPrimary,
         ),
+        inputFormatters: maskFormatter,
         controller: controller,
+        keyboardType: textInputType ?? TextInputType.text,
         decoration: InputDecoration(
           icon: Icon(icon, color: ColorsProject.buttonPrimary),
           hintText: hintText,
