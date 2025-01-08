@@ -19,15 +19,7 @@ class PageBasic extends StatelessWidget {
         leading: canGoBack
             ? IconButton(
                 onPressed: () {
-                  if (parametersReturnScreen != null) {
-                    if (parametersReturnScreen == "client") {
-                      Get.toNamed('/login/client');
-                    } else {
-                      Get.toNamed('/login/service_provider');
-                    }
-                  } else {
                     Get.back();
-                  }
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,
