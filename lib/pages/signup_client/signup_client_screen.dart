@@ -14,7 +14,6 @@ class SignUpClientScreen extends GetView<SignUpClientController> {
   Widget build(BuildContext context) {
     return PageBasic(
       canGoBack: true,
-      parametersReturnScreen: "client",
       body: Obx(() {
         return Stepper(
           currentStep: controller.currentStep.value,
