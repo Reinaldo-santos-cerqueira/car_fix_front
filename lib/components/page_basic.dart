@@ -5,12 +5,11 @@ import 'package:get/get.dart';
 class PageBasic extends StatelessWidget {
   final Widget body;
   final bool canGoBack;
-  final String? parametersReturnScreen;
-  const PageBasic(
-      {super.key,
-      required this.body,
-      required this.canGoBack,
-      this.parametersReturnScreen});
+  const PageBasic({
+    super.key,
+    required this.body,
+    required this.canGoBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class PageBasic extends StatelessWidget {
         leading: canGoBack
             ? IconButton(
                 onPressed: () {
-                    Get.back();
+                  Get.back();
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,
