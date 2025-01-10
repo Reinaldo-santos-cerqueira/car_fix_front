@@ -87,17 +87,20 @@ class StepsFormPersonal extends StatelessWidget {
             height: 20,
           ),
           TextFormFieldPasswordCustom(
-              controller: controller.textEditingControllerConfirmPassword,
-              icon: Icons.lock,
-              hintText: 'Confirme sua senha',
-              validator: Validatorless.multiple([
+            controller: controller.textEditingControllerConfirmPassword,
+            icon: Icons.lock,
+            hintText: 'Confirme sua senha',
+            validator: Validatorless.multiple(
+              [
                 Validatorless.regex(
                     RegExp(
                         r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$'),
                     "Digite uma senha válida"),
                 Validatorless.compare(controller.textEditingControllerPassword,
                     "As senhas devem ser iguais")
-              ])),
+              ],
+            ),
+          ),
           typeServiceProvider
               ? Column(
                   children: [
@@ -107,6 +110,7 @@ class StepsFormPersonal extends StatelessWidget {
                     TextFormWithoutIconFieldCustom(
                       controller: controller.textEditingControllerCnh,
                       hintText: 'Digite sua cnh',
+                      textInputType: TextInputType.number,
                       validator: Validatorless.multiple([
                         Validatorless.min(11, "Digite uma cnh valida"),
                         Validatorless.max(11, "Digite uma cnh valida"),
