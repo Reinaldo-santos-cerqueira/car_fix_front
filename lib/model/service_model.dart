@@ -44,8 +44,10 @@ class ServiceModel {
   ServiceModelApiServiceProvider getServiceSendApi() {
     return ServiceModelApiServiceProvider(
       serviceId: id,
-      priceService: double.parse(textEditingControllerPriceService!.text),
-      priceKmTraveled: double.parse(textEditingControllerPriceTraveled!.text),
+      priceService: double.parse(
+          textEditingControllerPriceService!.text.replaceAll(",", ".")),
+      priceKmTraveled: double.parse(
+          textEditingControllerPriceTraveled!.text.replaceAll(",", ".")),
     );
   }
 }
@@ -54,9 +56,31 @@ class ServiceModelApiServiceProvider {
   final String serviceId;
   final double priceService;
   final double priceKmTraveled;
+
   ServiceModelApiServiceProvider({
     required this.serviceId,
     required this.priceService,
     required this.priceKmTraveled,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'serviceId': serviceId,
+      'priceService': priceService.toStringAsFixed(2),
+      'priceKmTraveled': priceKmTraveled.toStringAsFixed(2),
+    };
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ServiceModelApiServiceProvider) return false;
+    return serviceId == other.serviceId &&
+        priceService == other.priceService &&
+        priceKmTraveled == other.priceKmTraveled;
+  }
+
+  @override
+  int get hashCode =>
+      serviceId.hashCode ^ priceService.hashCode ^ priceKmTraveled.hashCode;
 }
