@@ -30,14 +30,13 @@ class LoginScreen extends GetView<LoginController> {
                 TextFormFieldCustom(
                   controller: controller.textEditingControllerEmail,
                   hintText: "Digite seu email",
-                  icon: Icons.mail, 
+                  icon: Icons.mail,
                   validator: Validatorless.multiple([
                     Validatorless.email("Digite um email valido"),
                     Validatorless.required("Email é requirido'")
                   ]),
                 ),
                 const SizedBox(
-                  
                   height: 20,
                 ),
                 TextFormFieldPasswordCustom(
@@ -60,7 +59,9 @@ class LoginScreen extends GetView<LoginController> {
                       style: TextStyle(color: ColorsProject.buttonPrimary),
                     ),
                     TextButtonCustom(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed("/trade_password");
+                      },
                       text: "Clique aqui",
                     ),
                   ],
