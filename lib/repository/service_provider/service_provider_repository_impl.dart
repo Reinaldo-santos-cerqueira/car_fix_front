@@ -5,7 +5,7 @@ import 'package:car_fix/utils/url.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-class ServiceProviderRepositoryImpl extends ServiceProviderRepository {
+class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<http.Response> create(ServiceProviderModel clientData,
       XFile imageFileCnh, XFile imageFileDocumentVehicle) async {

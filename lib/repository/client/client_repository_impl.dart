@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:car_fix/repository/client/client_repository.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ClientRepositoryImpl extends ClientRepository {
+class ClientRepositoryImpl implements ClientRepository {
   @override
   Future<http.Response> create(ClientModel clientData, XFile imageFile) async {
     var uri = Uri.parse('$urlMain/authentication/signup/client');
