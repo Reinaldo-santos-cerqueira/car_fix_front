@@ -78,5 +78,38 @@ class UserServiceImpl implements UserService {
     }
   }
 
-
+    @override
+  Future<String?> login( String password, String email, String tokenPhone, RxBool loadingBtn) async {
+    BuildContext context = Get.context!;
+    try {
+      loadingBtn(true);
+      http.Response response =
+          await userRepository.login(email,password,tokenPhone);
+      if (response.statusCode == 200) {
+        showDialogSuccess(
+          title: "Login efetuado com sucesso",
+          context: context,
+          onPressed: () {
+            Get.back();
+          },
+        );
+        return "Success";
+      } else if (response.statusCode == 401 || response.statusCode == 401) {
+        var responseData = jsonDecode(response.body);
+        var errors = responseData['errors'];
+        throw CustomException(errors);
+      } else {
+        throw CustomException('Erro desconhecido: ${response.statusCode}');
+      }
+    } catch (e) {
+      if (e is CustomException) {
+        showDialogError(context: context, title: e.message);
+      } else {
+        showDialogError(context: context, title: e.toString());
+      }
+      return null;
+    } finally {
+      loadingBtn(false);
+    }
+  }
 }
