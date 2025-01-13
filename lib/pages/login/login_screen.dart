@@ -70,7 +70,9 @@ class LoginScreen extends GetView<LoginController> {
                   height: 10,
                 ),
                 PrimaryButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.login();
+                  },
                   text: 'Login',
                 ),
                 const SizedBox(
