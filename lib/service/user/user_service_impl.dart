@@ -41,5 +41,42 @@ class UserServiceImpl implements UserService {
     }
   }
 
+  @override
+  Future<String?> changePassword(
+      String token, String password, String email, RxBool loadingBtn) async {
+    BuildContext context = Get.context!;
+    try {
+      loadingBtn(true);
+      http.Response response =
+          await userRepository.changePassword(email, token, password);
+      if (response.statusCode == 200) {
+        showDialogSuccess(
+          title: "Senha trocada com sucesso",
+          context: context,
+          onPressed: () {
+            Get.back();
+            Get.back();
+          },
+        );
+        return "Success";
+      } else if (response.statusCode == 400) {
+        var responseData = jsonDecode(response.body);
+        var errors = responseData['errors'];
+        throw CustomException(errors);
+      } else {
+        throw CustomException('Erro desconhecido: ${response.statusCode}');
+      }
+    } catch (e) {
+      if (e is CustomException) {
+        showDialogError(context: context, title: e.message);
+      } else {
+        showDialogError(context: context, title: e.toString());
+      }
+      return null;
+    } finally {
+      loadingBtn(false);
+    }
+  }
+
 
 }

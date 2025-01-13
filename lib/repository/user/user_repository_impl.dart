@@ -14,4 +14,15 @@ class UserRepositoryImpl implements UserRepository {
     return response;
   }
 
+  @override
+  Future<http.Response> changePassword(String email, String token, String password) async {
+    final Uri url = Uri.parse('$urlMain/authentication/change_password');
+    final response = await http.patch(url, body: json.encode(
+      {"email": email,"tokenPasswordChange":token,"password": password}
+    ), headers: {
+      'Content-Type': 'application/json', 
+    });
+    return response;
+  }
+
 }
