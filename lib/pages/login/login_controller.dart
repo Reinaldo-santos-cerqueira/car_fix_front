@@ -1,11 +1,16 @@
+import 'package:car_fix/service/user/user_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
+  final UserService userService;
+  LoginController({required this.userService});
+
   TextEditingController textEditingControllerPassword = TextEditingController();
   TextEditingController textEditingControllerEmail = TextEditingController();
   final formKey = GlobalKey<FormState>();
   var type = "".obs;
+  final loadingBtn = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -20,4 +25,9 @@ class LoginController extends GetxController {
       Get.toNamed('/signup_service_provider');
     }
   }
+
+  void login(){
+    userService.login(textEditingControllerPassword.text, textEditingControllerEmail.text, "123", loadingBtn);
+  }
+
 }
