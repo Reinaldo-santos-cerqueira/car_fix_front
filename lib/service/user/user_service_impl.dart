@@ -1,0 +1,45 @@
+import 'dart:convert';
+import 'package:car_fix/exception/custom_exception.dart';
+import 'package:car_fix/repository/user/user_repository.dart';
+import 'package:car_fix/service/user/user_service.dart';
+import 'package:car_fix/utils/dialogs.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+class UserServiceImpl implements UserService {
+  final UserRepository userRepository;
+
+  UserServiceImpl({required this.userRepository});
+
+  @override
+  Future<String?> generateToken(
+      RxInt currentStep, String email, RxBool loadingBtn) async {
+    BuildContext context = Get.context!;
+    try {
+      loadingBtn(true);
+      http.Response response = await userRepository.generateToken(email);
+      if (response.statusCode == 201) {
+        currentStep(currentStep.value + 1);
+        return "Success";
+      } else if (response.statusCode == 400) {
+        var responseData = jsonDecode(response.body);
+        var errors = responseData['errors'];
+        throw CustomException(errors);
+      } else {
+        throw CustomException('Erro desconhecido: ${response.statusCode}');
+      }
+    } catch (e) {
+      if (e is CustomException) {
+        showDialogError(context: context, title: e.message);
+      } else {
+        showDialogError(context: context, title: e.toString());
+      }
+      return null;
+    } finally {
+      loadingBtn(false);
+    }
+  }
+
+
+}
