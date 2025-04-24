@@ -1,4 +1,5 @@
-import 'dart:convert';
+import 'address_model.dart';
+import 'vehicle_model.dart';
 
 class ClientModel {
   final String fullName;
@@ -6,17 +7,13 @@ class ClientModel {
   final String email;
   final String identifier;
   final String password;
-  final String type;
-  final String neighborhood;
-  final String street;
-  final String number;
-  final String city;
-  final String state;
-  final String cep;
-  final String plate;
-  final String color;
-  final String model;
-  final String mark;
+  final String? tokenPhone;
+  final String? tokenPasswordChange;
+  final String? type;
+  final String? addressId;
+  final String? role;
+  final AddressModel address;
+  final VehicleModel vehicle;
 
   ClientModel({
     required this.fullName,
@@ -24,68 +21,46 @@ class ClientModel {
     required this.email,
     required this.identifier,
     required this.password,
-    required this.type,
-    required this.neighborhood,
-    required this.street,
-    required this.number,
-    required this.city,
-    required this.state,
-    required this.cep,
-    required this.plate,
-    required this.color,
-    required this.model,
-    required this.mark,
+    required this.address,
+    required this.vehicle,
+    this.tokenPhone,
+    this.tokenPasswordChange,
+    this.type,
+    this.addressId,
+    this.role,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'fullName': fullName,
-      'phoneNumber': phoneNumber,
-      'email': email,
-      'identifier': identifier,
-      'password': password,
-      'type': type,
-      'neighborhood': neighborhood,
-      'street': street,
-      'number': number,
-      'city': city,
-      'state': state,
-      'cep': cep,
-      'plate': plate,
-      'color': color,
-      'model': model,
-      'mark': mark,
-    };
-  }
-
-  factory ClientModel.fromMap(Map<String, dynamic> map) {
+  factory ClientModel.fromJson(Map<String, dynamic> json) {
     return ClientModel(
-      fullName: map['fullName'] ?? '',
-      phoneNumber: map['phoneNumber'] ?? '',
-      email: map['email'] ?? '',
-      identifier: map['identifier'] ?? '',
-      password: map['password'] ?? '',
-      type: map['type'] ?? '',
-      neighborhood: map['neighborhood'] ?? '',
-      street: map['street'] ?? '',
-      number: map['number'] ?? '',
-      city: map['city'] ?? '',
-      state: map['state'] ?? '',
-      cep: map['cep'] ?? '',
-      plate: map['plate'] ?? '',
-      color: map['color'] ?? '',
-      model: map['model'] ?? '',
-      mark: map['mark'] ?? '',
+      fullName: json['full_name'],
+      phoneNumber: json['phone_number'],
+      email: json['email'],
+      identifier: json['identifier'],
+      password: json['password'],
+      tokenPhone: json['token_phone'],
+      tokenPasswordChange: json['token_password_change'],
+      type: json['type'],
+      addressId: json['address_id'],
+      role: json['role'],
+      address: AddressModel.fromJson(json['address']),
+      vehicle: VehicleModel.fromJson(json['vehicle']),
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory ClientModel.fromJson(String source) =>
-      ClientModel.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return json.encode( toMap());
+  Map<String, dynamic> toJson() {
+    return {
+      'full_name': fullName,
+      'phone_number': phoneNumber,
+      'email': email,
+      'identifier': identifier,
+      'password': password,
+      'token_phone': tokenPhone,
+      'token_password_change': tokenPasswordChange,
+      'type': type,
+      'address_id': addressId,
+      'role': role,
+      'address': address.toJson(),
+      'vehicle': vehicle.toJson(),
+    };
   }
 }
