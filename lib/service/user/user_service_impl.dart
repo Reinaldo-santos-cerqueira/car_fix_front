@@ -28,7 +28,7 @@ class UserServiceImpl implements UserService {
         var responseData = jsonDecode(response.body);
         var errors = responseData['errors'];
         throw CustomException(errors);
-      } else { 
+      } else {
         throw CustomException('Erro desconhecido: ${response.statusCode}');
       }
     } catch (e) {
@@ -88,7 +88,7 @@ class UserServiceImpl implements UserService {
       http.Response response = await userRepository.login(loginModel);
       if (response.statusCode == 200) {
         Map<String, dynamic> responseData = jsonDecode(response.body);
-        await saveToLocalStorage(responseData);
+        await saveToLocalStorage(responseData,loginModel.type);
         showDialogSuccess(
           title: "Login efetuado com sucesso",
           context: context,
@@ -118,7 +118,7 @@ class UserServiceImpl implements UserService {
     }
   }
 
-  Future<void> saveToLocalStorage(Map<String, dynamic> data) async {
+  Future<void> saveToLocalStorage(Map<String, dynamic> data, String type) async {
     final prefs = await SharedPreferences.getInstance();
 
     if(data.containsKey('serviceIds')){
@@ -126,6 +126,7 @@ class UserServiceImpl implements UserService {
     }
     await prefs.setString('token', data['token']);
     await prefs.setString('userId', data['user']['id']);
-    await prefs.setString('userIdentifier', data['user']['identifier']);
+    await prefs.setString('identifier', data['user']['identifier']);
+    await prefs.setString('type',type);
   }
 }
