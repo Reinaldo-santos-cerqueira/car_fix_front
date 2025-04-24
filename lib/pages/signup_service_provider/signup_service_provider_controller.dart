@@ -2,6 +2,7 @@ import 'package:car_fix/model/address_model.dart';
 import 'package:car_fix/model/client_model.dart';
 import 'package:car_fix/model/service_model.dart';
 import 'package:car_fix/model/service_provider_model.dart';
+import 'package:car_fix/model/vehicle_model.dart';
 import 'package:car_fix/service/service_provider/service_provider_service.dart';
 import 'package:car_fix/service/services/services_service.dart';
 import 'package:car_fix/service/via_cep/via_cep_service.dart';
@@ -35,6 +36,8 @@ class SignUpServiceProviderController extends GetxController {
   TextEditingController textEditingControllerStreet = TextEditingController();
   TextEditingController textEditingControllerNumber = TextEditingController();
   TextEditingController textEditingControllerCep = TextEditingController();
+  TextEditingController textEditingControllerComplement =
+      TextEditingController();
   TextEditingController textEditingControllerState = TextEditingController();
   TextEditingController textEditingControllerCity = TextEditingController();
   TextEditingController textEditingControllerModel = TextEditingController();
@@ -55,8 +58,9 @@ class SignUpServiceProviderController extends GetxController {
   final Rx<XFile?> fileDocumentVehicle = Rx<XFile?>(null);
   final filePathDocumentVehicle = "".obs;
   final txtErrorDocumentVehicle = "".obs;
-  List<ServiceModelApiServiceProvider> listServiceApi = [];
+  List<String> listServiceApi = [];
   final FocusNode focusNodeCep = FocusNode();
+  final Rx<int> serviceSelected = 0.obs;
 
   final RxList<ServiceModel> listService = <ServiceModel>[].obs;
 
@@ -78,7 +82,7 @@ class SignUpServiceProviderController extends GetxController {
         case 0:
           if (!formKeyPersonal.currentState!.validate()) {
             if (fileCnh.value == null) {
-              txtErrorCnh.value = "Imagem de Cnh é obrigatorio";  
+              txtErrorCnh.value = "Imagem de Cnh é obrigatorio";
             }
             return;
           } else if (fileCnh.value == null) {
@@ -102,23 +106,17 @@ class SignUpServiceProviderController extends GetxController {
           currentStep(currentStep.value + 1);
           break;
         case 3:
-          var validateForm = false;
-          var serviceSelected = 0;
           for (var service in listService) {
-            if (service.isSelected) {
-              if (!service.formKey!.currentState!.validate()) {
-                validateForm = true;
-                continue;
-              } else {
-                if (!listServiceApi.contains(service.getServiceSendApi())) {
-                  listServiceApi.add(service.getServiceSendApi());
-                }
+            if (listServiceApi.contains(service.id)) {
+              if (!service.isSelected) {
+                listServiceApi.remove(service.id);
               }
-              serviceSelected++;
+            } else {
+              if (service.isSelected) {
+                listServiceApi.add(service.id);
+                serviceSelected.value++;
+              }
             }
-          }
-          if (validateForm) {
-            return;
           }
           if (serviceSelected == 0) {
             showDialogError(
@@ -130,27 +128,37 @@ class SignUpServiceProviderController extends GetxController {
           String cpfWithouPoint =
               textEditingControllerIdentifier.text.replaceAll(".", "");
           String cpfFormatted = cpfWithouPoint.replaceAll("-", "");
+          AddressModel address = AddressModel(
+            neighborhood: textEditingControllerNeighborhood.text,
+            street: textEditingControllerStreet.text,
+            number: textEditingControllerNumber.text,
+            city: textEditingControllerCity.text,
+            state: textEditingControllerState.text,
+            cep: textEditingControllerCep.text,
+            complement: textEditingControllerComplement.text,
+          );
 
+          VehicleModel vehicle = VehicleModel(
+            model: textEditingControllerModel.text,
+            mark: textEditingControllerMark.text,
+            plate: textEditingControllerPlate.text,
+            color: textEditingControllerColor.text,
+            pathToDocument: fileDocumentVehicle.value!.path,
+          );
+
+          ClientModel user = ClientModel(
+            fullName: textEditingControllerFullName.text,
+            phoneNumber: textEditingControllerPhoneNumber.text,
+            email: textEditingControllerEmail.text,
+            identifier: cpfFormatted,
+            password: textEditingControllerPassword.text,
+            type: "SERVICE_PROVIDER",
+            address: address,
+            vehicle: vehicle,
+          );
           ServiceProviderModel clientData = ServiceProviderModel(
             listServicesID: listServiceApi,
-            userDto: ClientModel(
-              fullName: textEditingControllerFullName.text,
-              phoneNumber: textEditingControllerPhoneNumber.text,
-              email: textEditingControllerEmail.text,
-              identifier: cpfFormatted,
-              password: textEditingControllerPassword.text,
-              type: "SERVICE_PROVIDER",
-              neighborhood: textEditingControllerNeighborhood.text,
-              street: textEditingControllerStreet.text,
-              number: textEditingControllerNumber.text,
-              city: textEditingControllerCity.text,
-              state: textEditingControllerState.text,
-              cep: textEditingControllerCep.text,
-              plate: textEditingControllerPlate.text,
-              color: textEditingControllerColor.text,
-              model: textEditingControllerModel.text,
-              mark: textEditingControllerMark.text,
-            ),
+            userDto: user,
             cnh: textEditingControllerCnh.text,
           );
 
