@@ -1,5 +1,6 @@
 import 'package:car_fix/model/address_model.dart';
 import 'package:car_fix/model/client_model.dart';
+import 'package:car_fix/model/vehicle_model.dart';
 import 'package:car_fix/service/client/client_service.dart';
 import 'package:car_fix/service/via_cep/via_cep_service.dart';
 import 'package:flutter/widgets.dart';
@@ -27,12 +28,15 @@ class SignUpClientController extends GetxController {
   TextEditingController textEditingControllerStreet = TextEditingController();
   TextEditingController textEditingControllerNumber = TextEditingController();
   TextEditingController textEditingControllerCep = TextEditingController();
+  TextEditingController textEditingControllerComplement = TextEditingController();
+
   TextEditingController textEditingControllerState = TextEditingController();
   TextEditingController textEditingControllerCity = TextEditingController();
   TextEditingController textEditingControllerModel = TextEditingController();
   TextEditingController textEditingControllerMark = TextEditingController();
   TextEditingController textEditingControllerPlate = TextEditingController();
   TextEditingController textEditingControllerColor = TextEditingController();
+
   TextEditingController textEditingControllerPathToImageCnh =
       TextEditingController();
   TextEditingController textEditingControllerCnh = TextEditingController();
@@ -94,38 +98,48 @@ class SignUpClientController extends GetxController {
         if (!formKeyVehicle.currentState!.validate()) {
           return;
         } else if (fileDocumentVehicle.value == null) {
-          txtErrorDocumentVehicle.value = "Documento do carro é obrigatorio";
+          txtErrorDocumentVehicle.value = "Documento do carro é obrigatório";
           return;
         }
-        if (fileDocumentVehicle.value == null) {
-          txtErrorDocumentVehicle.value = "Documento do carro é obrigatorio";
-        } else {
-          String cpfWithouPoint = textEditingControllerIdentifier.text.replaceAll(".", "");
-          String cpfFormatted = cpfWithouPoint.replaceAll("-", "");
-          ClientModel clientModel = ClientModel(
-            fullName: textEditingControllerFullName.text,
-            phoneNumber: textEditingControllerPhoneNumber.text,
-            email: textEditingControllerEmail.text,
-            identifier: cpfFormatted,
-            password: textEditingControllerPassword.text,
-            type: "CLIENT",
-            neighborhood: textEditingControllerNeighborhood.text,
-            street: textEditingControllerStreet.text,
-            number: textEditingControllerNumber.text,
-            city: textEditingControllerCity.text,
-            state: textEditingControllerState.text,
-            cep: textEditingControllerCep.text,
-            plate: textEditingControllerPlate.text,
-            color: textEditingControllerColor.text,
-            model: textEditingControllerModel.text,
-            mark: textEditingControllerMark.text,
-          );
-          clientService.create(
-              clientModel, fileDocumentVehicle.value!, context, loadingBtn);
-        }
+
+        String cpfFormatted = textEditingControllerIdentifier.text
+            .replaceAll(".", "")
+            .replaceAll("-", "");
+
+        AddressModel address = AddressModel(
+          neighborhood: textEditingControllerNeighborhood.text,
+          street: textEditingControllerStreet.text,
+          number: textEditingControllerNumber.text,
+          city: textEditingControllerCity.text,
+          state: textEditingControllerState.text,
+          cep: textEditingControllerCep.text,
+          complement: textEditingControllerComplement.text,
+        );
+
+        VehicleModel vehicle = VehicleModel(
+          model: textEditingControllerModel.text,
+          mark: textEditingControllerMark.text,
+          plate: textEditingControllerPlate.text,
+          color: textEditingControllerColor.text,
+          pathToDocument: fileDocumentVehicle.value!.path,
+        );
+
+        ClientModel user = ClientModel(
+          fullName: textEditingControllerFullName.text,
+          phoneNumber: textEditingControllerPhoneNumber.text,
+          email: textEditingControllerEmail.text,
+          identifier: cpfFormatted,
+          password: textEditingControllerPassword.text,
+          type: "CLIENT",
+          address: address,
+          vehicle: vehicle,
+        );
+
+        clientService.create(user, fileDocumentVehicle.value!, context, loadingBtn);
       }
     }
   }
+
 
   void getService(){
     
