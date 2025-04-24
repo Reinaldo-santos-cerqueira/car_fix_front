@@ -23,21 +23,19 @@ class ServiceProviderServiceImpl extends ServiceProviderService {
           await serviceProviderRepository.create(clientData, imageFileCnh,imageFileDocumentVehicle);
       if (response.statusCode == 201) {
         showDialogSuccess(
-          title: "Criado com sucesso",
-          context: context,
-          onPressed: (){
-            Get.back();
-            Get.back();
-          }
+            title: "Criado com sucesso",
+            context: context,
+            onPressed: () {
+              Get.back();
+              Get.back();
+            }
         );
         return "Success";
-      } else if (response.statusCode == 400) {
-        var responseData = jsonDecode(response.body);
-        var errors = responseData['errors'];
-        throw CustomException(errors);
-      } else {
-        throw CustomException('Erro desconhecido: ${response.statusCode}');
       }
+      final responseData = jsonDecode(response.body);
+      final errorMessage = _getErrorMessage(response.statusCode, responseData);
+      throw CustomException(errorMessage);
+
     } catch (e) {
       if (e is CustomException) {
         showDialogError(context: context, title: e.message);
@@ -47,6 +45,16 @@ class ServiceProviderServiceImpl extends ServiceProviderService {
       return null;
     } finally {
       loadingBtn(false);
+    }
+  }
+  String _getErrorMessage(int statusCode, Map<String, dynamic> responseData) {
+    switch (statusCode) {
+      case 400:
+        return responseData['errors']?.toString() ?? 'Erro de validação';
+      case 409:
+        return responseData['message']?.toString() ?? 'Usuário já existe';
+      default:
+        return 'Erro desconhecido: $statusCode';
     }
   }
 }
