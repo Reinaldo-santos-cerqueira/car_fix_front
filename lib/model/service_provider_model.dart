@@ -4,7 +4,7 @@ import 'package:car_fix/model/client_model.dart';
 import 'package:car_fix/model/service_model.dart';
 
 class ServiceProviderModel {
-  List<ServiceModelApiServiceProvider> listServicesID;
+  List<String> listServicesID;
   ClientModel userDto;
   String cnh;
 
@@ -16,9 +16,9 @@ class ServiceProviderModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'userDto': userDto.toMap(),
+      'user_dto': userDto,
       'cnh': cnh,
-      'listServicesID': listServicesID.map((service) => service.toJson()).toList(),
+      'services_id': listServicesID,
     };
   }
 
