@@ -8,10 +8,10 @@ import 'package:image_picker/image_picker.dart';
 class ClientRepositoryImpl implements ClientRepository {
   @override
   Future<http.Response> create(ClientModel clientData, XFile imageFile) async {
-    var uri = Uri.parse('$urlMain/authentication/signup/client');
+    var uri = Uri.parse('$urlMain/users/client');
     var request = http.MultipartRequest('POST', uri);
 
-    request.fields['clientData'] = json.encode(clientData.toMap());
+    request.fields['data'] = json.encode(clientData.toJson());
 
     var file = await http.MultipartFile.fromPath(
       'imageDocumentVehicle',
