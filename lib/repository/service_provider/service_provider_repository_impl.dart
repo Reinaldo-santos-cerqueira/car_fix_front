@@ -9,13 +9,13 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<http.Response> create(ServiceProviderModel clientData,
       XFile imageFileCnh, XFile imageFileDocumentVehicle) async {
-    var uri = Uri.parse('$urlMain/authentication/signup/service_provider');
+    var uri = Uri.parse('$urlMain/users/service_provider');
     var request = http.MultipartRequest('POST', uri);
 
-    request.fields['serviceProviderData'] = jsonEncode(clientData.toJson());  
-    
+    request.fields['data'] = jsonEncode(clientData.toJson());
+
     print(json.encode(clientData.toJson()));
-    
+
     var fileDocumentVehicle = await http.MultipartFile.fromPath(
       'imageDocumentVehicle',
       imageFileDocumentVehicle.path,
