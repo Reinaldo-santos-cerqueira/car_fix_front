@@ -63,6 +63,14 @@ class StepsFormAddress extends StatelessWidget {
               Validatorless.required("Digite um estado valido"),
             ]),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          TextFormWithoutIconFieldCustom(
+            controller: controller.textEditingControllerComplement,
+            hintText: 'Digite o complemento',
+            validator: null,
+          ),
         ],
       ),
     );
