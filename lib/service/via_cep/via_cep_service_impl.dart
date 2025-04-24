@@ -21,6 +21,8 @@ class ViaCepServiceImpl extends ViaCepService {
             cep: cep,
             state: data["uf"] ?? '',
             city: data["localidade"] ?? '',
+            number: '',
+            complement:''
           );
           return addressModel;
         }
