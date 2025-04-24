@@ -1,3 +1,4 @@
+import 'package:car_fix/model/login_model.dart';
 import 'package:get/get.dart';
 
 abstract class UserService {
@@ -5,5 +6,5 @@ abstract class UserService {
       RxInt currentStep, String email, RxBool loadingBtn);
   Future<String?> changePassword(
       String token, String password, String email, RxBool loadingBtn);
-  Future<String?> login(String password, String email,String tokenPhone, RxBool loadingBtn);
+  Future<String?> login(LoginModel loginModel, RxBool loadingBtn);
 }

@@ -1,9 +1,11 @@
+import 'package:car_fix/model/login_model.dart';
 import 'package:car_fix/service/user/user_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   final UserService userService;
+
   LoginController({required this.userService});
 
   TextEditingController textEditingControllerPassword = TextEditingController();
@@ -18,16 +20,22 @@ class LoginController extends GetxController {
     type(Get.parameters['type']);
   }
 
-  void goSignUp(){
-    if(type.value == 'client'){
+  void goSignUp() {
+    if (type.value == 'client') {
       Get.toNamed('/signup_client');
-    }else {
+    } else {
       Get.toNamed('/signup_service_provider');
     }
   }
 
-  void login(){
-    userService.login(textEditingControllerPassword.text, textEditingControllerEmail.text, "123", loadingBtn);
+  void login() {
+    userService.login(
+      LoginModel(
+          email: textEditingControllerEmail.text,
+          password: textEditingControllerPassword.text,
+          tokenPhone: '123',
+          type: type.value),
+      loadingBtn,
+    );
   }
-
 }

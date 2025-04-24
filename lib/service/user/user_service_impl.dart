@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:car_fix/exception/custom_exception.dart';
+import 'package:car_fix/model/login_model.dart';
 import 'package:car_fix/repository/user/user_repository.dart';
 import 'package:car_fix/service/user/user_service.dart';
 import 'package:car_fix/utils/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserServiceImpl implements UserService {
   final UserRepository userRepository;
@@ -26,7 +28,7 @@ class UserServiceImpl implements UserService {
         var responseData = jsonDecode(response.body);
         var errors = responseData['errors'];
         throw CustomException(errors);
-      } else {
+      } else { 
         throw CustomException('Erro desconhecido: ${response.statusCode}');
       }
     } catch (e) {
@@ -78,14 +80,15 @@ class UserServiceImpl implements UserService {
     }
   }
 
-    @override
-  Future<String?> login( String password, String email, String tokenPhone, RxBool loadingBtn) async {
+  @override
+  Future<String?> login(LoginModel loginModel, RxBool loadingBtn) async {
     BuildContext context = Get.context!;
     try {
       loadingBtn(true);
-      http.Response response =
-          await userRepository.login(email,password,tokenPhone);
+      http.Response response = await userRepository.login(loginModel);
       if (response.statusCode == 200) {
+        Map<String, dynamic> responseData = jsonDecode(response.body);
+        await saveToLocalStorage(responseData);
         showDialogSuccess(
           title: "Login efetuado com sucesso",
           context: context,
@@ -93,13 +96,15 @@ class UserServiceImpl implements UserService {
             Get.back();
           },
         );
+
         return "Success";
       } else if (response.statusCode == 401 || response.statusCode == 401) {
         var responseData = jsonDecode(response.body);
-        var errors = responseData['errors'];
+        var errors = responseData['errors'] ?? responseData['message'];
         throw CustomException(errors);
       } else {
-        throw CustomException('Erro desconhecido: ${response.statusCode}');
+        throw CustomException(
+            'Erro desconhecido: ${response.statusCode}, ${response.body}');
       }
     } catch (e) {
       if (e is CustomException) {
@@ -111,5 +116,16 @@ class UserServiceImpl implements UserService {
     } finally {
       loadingBtn(false);
     }
+  }
+
+  Future<void> saveToLocalStorage(Map<String, dynamic> data) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    if(data.containsKey('serviceIds')){
+      await prefs.setString('serviceIds', jsonEncode(data['serviceIds']));
+    }
+    await prefs.setString('token', data['token']);
+    await prefs.setString('userId', data['user']['id']);
+    await prefs.setString('userIdentifier', data['user']['identifier']);
   }
 }
