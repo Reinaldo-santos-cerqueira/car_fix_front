@@ -1,6 +1,8 @@
 
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class ColorsProject {
   static const blackPrimary = Color(0xFF161616);
   static final blackPrimaryBgOpacityBot = const Color(0xFF161616).withOpacity(0.9);
@@ -12,4 +14,6 @@ class ColorsProject {
   static const grayContrast = Color(0xFF292929);
   static const greenPrimary = Color(0xFF01B2A0);
   static const redPrimary  = Color.fromARGB(255, 255, 48, 48);
+  static const white = Colors.white;
+  static const white1 = Color(0xFFE1E1E1);
 }
