@@ -28,14 +28,22 @@ class LoginController extends GetxController {
     }
   }
 
-  void login() {
-    userService.login(
+  void login() async {
+    bool loginResult = await userService.login(
       LoginModel(
-          email: textEditingControllerEmail.text,
-          password: textEditingControllerPassword.text,
-          tokenPhone: '123',
-          type: type.value),
+        email: textEditingControllerEmail.text,
+        password: textEditingControllerPassword.text,
+        tokenPhone: '123',
+        type: type.value,
+      ),
       loadingBtn,
     );
+    if(loginResult){
+      if(type.value == "client"){
+        Get.offAllNamed("home_client");
+      }else {
+        Get.offAllNamed("home_service_provider");
+      }
+    }
   }
 }
