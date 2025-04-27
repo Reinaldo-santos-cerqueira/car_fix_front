@@ -1,10 +1,11 @@
 import 'package:car_fix/components/buttons/outlined_button_custom.dart';
 import 'package:car_fix/components/buttons/primary_button.dart';
+import 'package:car_fix/pages/pre_login/pre_login_controller.dart';
 import 'package:car_fix/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class PreLoginScreen extends StatelessWidget {
+class PreLoginScreen extends GetView<PreLoginController> {
   const PreLoginScreen({super.key});
 
   @override
@@ -44,18 +45,14 @@ class PreLoginScreen extends StatelessWidget {
                   height: 10,
                 ),
                 PrimaryButton(
-                  onPressed: () {
-                    Get.toNamed('/login/client');
-                  },
+                  onPressed: controller.goToLoginClient,
                   text: "Cliente".toUpperCase(),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 OutlinedButtonCustom(
-                  onPressed: () {
-                    Get.toNamed('/login/service_provider');
-                  },
+                  onPressed: controller.goToLoginServiceProvider,
                   text: "Prestador de serviço".toUpperCase(),
                 ),
               ],
