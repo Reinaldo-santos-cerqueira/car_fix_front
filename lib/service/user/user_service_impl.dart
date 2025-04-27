@@ -81,7 +81,7 @@ class UserServiceImpl implements UserService {
   }
 
   @override
-  Future<String?> login(LoginModel loginModel, RxBool loadingBtn) async {
+  Future<bool> login(LoginModel loginModel, RxBool loadingBtn) async {
     BuildContext context = Get.context!;
     try {
       loadingBtn(true);
@@ -97,7 +97,7 @@ class UserServiceImpl implements UserService {
           },
         );
 
-        return "Success";
+        return true;
       } else if (response.statusCode == 401 || response.statusCode == 401) {
         var responseData = jsonDecode(response.body);
         var errors = responseData['errors'] ?? responseData['message'];
@@ -112,7 +112,7 @@ class UserServiceImpl implements UserService {
       } else {
         showDialogError(context: context, title: e.toString());
       }
-      return null;
+      return false;
     } finally {
       loadingBtn(false);
     }

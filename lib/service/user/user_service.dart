@@ -6,5 +6,5 @@ abstract class UserService {
       RxInt currentStep, String email, RxBool loadingBtn);
   Future<String?> changePassword(
       String token, String password, String email, RxBool loadingBtn);
-  Future<String?> login(LoginModel loginModel, RxBool loadingBtn);
+  Future<bool> login(LoginModel loginModel, RxBool loadingBtn);
 }
