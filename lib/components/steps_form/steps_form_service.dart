@@ -22,7 +22,6 @@ class _StepsFormServiceState extends State<StepsFormService> {
         itemBuilder: (context, index) {
           ServiceModel service = controller.listService[index];
           return Form(
-            key: controller.listService[index].formKey,
             child: Column(
               children: [
                 Container(
