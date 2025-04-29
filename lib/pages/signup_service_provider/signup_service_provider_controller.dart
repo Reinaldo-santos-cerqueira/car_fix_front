@@ -118,7 +118,7 @@ class SignUpServiceProviderController extends GetxController {
               }
             }
           }
-          if (serviceSelected == 0) {
+          if (serviceSelected.value == 0) {
             showDialogError(
               title: "Escolha ao menos 1 serviço",
               context: Get.context!,
