@@ -1,4 +1,5 @@
 import 'package:car_fix/components/buttons/primary_button.dart';
+import 'package:car_fix/model/service_model.dart';
 import 'package:car_fix/pages/home_client/home_client_controller.dart';
 import 'package:car_fix/utils/get_size.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+import '../../model/confirm_request_arguments_model.dart';
 import '../../utils/colors.dart';
 
 class HomeClientScreen extends GetView<HomeClientController> {
@@ -122,86 +124,70 @@ class HomeClientScreen extends GetView<HomeClientController> {
                         ),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 30),
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  width:
-                                      getSize.getWidthFromPercent(context, 90),
-                                  child: IntrinsicHeight(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Container(
-                                        width: getSize.getWidthFromPercent(
-                                            context, 80),
-                                        decoration: BoxDecoration(
-                                            color: Colors.black,
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight:
+                                getSize.getHeightFromPercent(context, 40),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 30),
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: controller.listService.length,
+                              itemBuilder: (context, index) {
+                                ServiceModel service =
+                                    controller.listService[index];
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      width: getSize.getWidthFromPercent(
+                                          context, 90),
+                                      child: ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxHeight:
+                                              getSize.getHeightFromPercent(
+                                                  context, 35),
+                                        ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(20.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            spacing: 20,
-                                            children: [
-                                              const Text(
-                                                "Carga de bateria",
-                                                style: TextStyle(
-                                                  fontSize: 22,
-                                                  color: Color(0xFFE1E1E1),
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              RichText(
-                                                maxLines: 4,
-                                                overflow: TextOverflow.ellipsis,
-                                                text: const TextSpan(
-                                                  children: <TextSpan>[
-                                                    TextSpan(
-                                                      text: 'Descrição: ',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color:
-                                                            Color(0xFFE1E1E1),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    TextSpan(
-                                                      text:
-                                                          'Lorem ipsum dolor sit amet consectetur. Sit lobortis proin aliquet malesuada facilisis consectetur risus. Metus lacus tincidunt id pharetra vel.',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color:
-                                                            Color(0xFFE1E1E1),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Column(
+                                          child: Container(
+                                            width: getSize.getWidthFromPercent(
+                                                context, 80),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(20.0),
+                                              child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
+                                                spacing: 20,
                                                 children: [
+                                                  Text(
+                                                    service.title,
+                                                    style: const TextStyle(
+                                                      fontSize: 22,
+                                                      color: Color(0xFFE1E1E1),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
                                                   RichText(
                                                     maxLines: 4,
                                                     overflow:
                                                         TextOverflow.ellipsis,
-                                                    text: const TextSpan(
+                                                    text: TextSpan(
                                                       children: <TextSpan>[
-                                                        TextSpan(
-                                                          text:
-                                                              'Valor do serviço: ',
+                                                        const TextSpan(
+                                                          text: 'Descrição: ',
                                                           style: TextStyle(
                                                             fontSize: 14,
                                                             color: Color(
@@ -211,8 +197,10 @@ class HomeClientScreen extends GetView<HomeClientController> {
                                                           ),
                                                         ),
                                                         TextSpan(
-                                                          text: '100.00R\$',
-                                                          style: TextStyle(
+                                                          text: service
+                                                              .description,
+                                                          style:
+                                                              const TextStyle(
                                                             fontSize: 14,
                                                             color: Color(
                                                                 0xFFE1E1E1),
@@ -221,53 +209,119 @@ class HomeClientScreen extends GetView<HomeClientController> {
                                                       ],
                                                     ),
                                                   ),
-                                                  RichText(
-                                                    maxLines: 4,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    text: const TextSpan(
-                                                      children: <TextSpan>[
-                                                        TextSpan(
-                                                          text: 'Valor do KM:',
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: Color(
-                                                                0xFFE1E1E1),
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      RichText(
+                                                        maxLines: 4,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        text: TextSpan(
+                                                          children: <TextSpan>[
+                                                            const TextSpan(
+                                                              text:
+                                                                  'Valor do serviço: ',
+                                                              style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Color(
+                                                                    0xFFE1E1E1),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            TextSpan(
+                                                              text: service
+                                                                  .priceService
+                                                                  .toString(),
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Color(
+                                                                    0xFFE1E1E1),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                        TextSpan(
-                                                          text: '5.00R\$',
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: Color(
-                                                                0xFFE1E1E1),
-                                                          ),
+                                                      ),
+                                                      RichText(
+                                                        maxLines: 4,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        text: TextSpan(
+                                                          children: <TextSpan>[
+                                                            const TextSpan(
+                                                              text:
+                                                                  'Valor do KM:',
+                                                              style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Color(
+                                                                    0xFFE1E1E1),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            TextSpan(
+                                                              text: service
+                                                                  .priceKmTraveled
+                                                                  .toString(),
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontSize: 14,
+                                                                color: Color(
+                                                                    0xFFE1E1E1),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Expanded(
+                                                    child: Align(
+                                                      alignment: Alignment
+                                                          .bottomCenter,
+                                                      child: PrimaryButton(
+                                                        onPressed: () {
+                                                          Get.toNamed(
+                                                            '/confirm_request',
+                                                            arguments:
+                                                                ConfirmRequestArgumentsModel(
+                                                              serviceId:
+                                                                  service.id,
+                                                              latitude: controller
+                                                                  .currentPosition
+                                                                  .value
+                                                                  .latitude,
+                                                              longitude: controller
+                                                                  .currentPosition
+                                                                  .value
+                                                                  .longitude,
+                                                              address: "${controller.street.value}, ${controller.neighborhood.value}",
+                                                            ),
+                                                          );
+                                                        },
+                                                        text: "Solicitar",
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                              PrimaryButton(
-                                                onPressed: () {
-                                                  print(1);
-                                                },
-                                                text: "Solicitar",
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),

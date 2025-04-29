@@ -1,3 +1,5 @@
+import 'package:car_fix/model/service_model.dart';
+import 'package:car_fix/service/services/services_service.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -5,17 +7,25 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 
 class HomeClientController extends GetxController {
+  final ServicesService servicesService;
+
+  HomeClientController({
+    required this.servicesService,
+  });
+
   Rx<LatLng> currentPosition = const LatLng(0, 0).obs;
   late MapController mapController;
   Rx<bool> loading = false.obs;
   Rx<String> street = "".obs;
   Rx<String> neighborhood = "".obs;
+  final RxList<ServiceModel> listService = <ServiceModel>[].obs;
 
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
     mapController = MapController();
     checkLocationPermission();
+    await getServices();
   }
 
   void getPosition() async {
@@ -56,5 +66,11 @@ class HomeClientController extends GetxController {
       }
     }
     getPosition();
+  }
+
+  Future<void> getServices() async {
+    List<ServiceModel>? listReturnService =
+        await servicesService.get(Get.context!);
+    listService.value = listReturnService!;
   }
 }
