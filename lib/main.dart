@@ -3,7 +3,6 @@ import 'package:car_fix/pages/home_client/home_client_module.dart';
 import 'package:car_fix/pages/home_service_provider/home_service_provider_module.dart';
 import 'package:car_fix/pages/login/login_module.dart';
 import 'package:car_fix/pages/pre_login/pre_login_module.dart';
-import 'package:car_fix/pages/search_provider_service/search_service_provider_module.dart';
 import 'package:car_fix/pages/signup_client/signup_client_module.dart';
 import 'package:car_fix/pages/signup_service_provider/signup_service_provider_module.dart';
 import 'package:car_fix/pages/trade_password/change_password_module.dart';
@@ -32,7 +31,6 @@ class MyApp extends StatelessWidget {
         ...HomeServiceProviderModule().routers,
         ...HomeClientModule().routers,
         ...ConfirmRequestModule().routers,
-        ...SearchServiceProviderModule().routers,
       ],
       builder: EasyLoading.init(),
     );
