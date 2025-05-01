@@ -117,6 +117,7 @@ class SignUpClientController extends GetxController {
         );
 
         VehicleModel vehicle = VehicleModel(
+          null, 
           model: textEditingControllerModel.text,
           mark: textEditingControllerMark.text,
           plate: textEditingControllerPlate.text,
