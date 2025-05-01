@@ -4,8 +4,10 @@ class VehicleModel {
   final String plate;
   final String color;
   final String pathToDocument;
+  final String? id;
 
-  VehicleModel({
+  VehicleModel(
+    this.id, {
     required this.model,
     required this.mark,
     required this.plate,
@@ -15,6 +17,7 @@ class VehicleModel {
 
   factory VehicleModel.fromJson(Map<String, dynamic> json) {
     return VehicleModel(
+      json['id'],
       model: json['model'],
       mark: json['mark'],
       plate: json['plate'],
@@ -25,6 +28,7 @@ class VehicleModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'model': model,
       'mark': mark,
       'plate': plate,
