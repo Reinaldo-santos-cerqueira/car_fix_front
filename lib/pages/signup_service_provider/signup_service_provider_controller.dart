@@ -58,6 +58,12 @@ class SignUpServiceProviderController extends GetxController {
   final Rx<XFile?> fileDocumentVehicle = Rx<XFile?>(null);
   final filePathDocumentVehicle = "".obs;
   final txtErrorDocumentVehicle = "".obs;
+
+  final textBtnImgProfile = "Foto de perfil obrigatória".obs;
+  final Rx<XFile?> fileProfile = Rx<XFile?>(null);
+  final filePathProfile = "".obs;
+  final txtErrorProfile = "".obs;
+
   List<String> listServiceApi = [];
   final FocusNode focusNodeCep = FocusNode();
   final Rx<int> serviceSelected = 0.obs;
@@ -84,12 +90,18 @@ class SignUpServiceProviderController extends GetxController {
             if (fileCnh.value == null) {
               txtErrorCnh.value = "Imagem de Cnh é obrigatorio";
             }
+            if (fileProfile.value == null) {
+              txtErrorProfile.value = "Imagem de perfil é obrigatorio";
+            }
             return;
           } else if (fileCnh.value == null) {
             txtErrorCnh.value = "Imagem de Cnh é obrigatorio";
             return;
+          }else if (fileProfile.value == null) {
+            txtErrorProfile.value = "Imagem de perfil é obrigatorio";
           } else {
             txtErrorCnh.value = "";
+            txtErrorProfile.value = "";
             currentStep(currentStep.value + 1);
           }
           break;
@@ -167,6 +179,7 @@ class SignUpServiceProviderController extends GetxController {
             clientData,
             fileDocumentVehicle.value!,
             fileCnh.value!,
+            fileProfile.value!,
             Get.context!,
             loadingBtn,
           );

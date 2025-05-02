@@ -7,19 +7,27 @@ import 'package:image_picker/image_picker.dart';
 
 class ClientRepositoryImpl implements ClientRepository {
   @override
-  Future<http.Response> create(ClientModel clientData, XFile imageFile) async {
+  Future<http.Response> create(ClientModel clientData, XFile imageDocumentVehicle,  XFile imageProfile) async {
     var uri = Uri.parse('$urlMain/users/client');
     var request = http.MultipartRequest('POST', uri);
 
     request.fields['data'] = json.encode(clientData.toJson());
 
-    var file = await http.MultipartFile.fromPath(
+    var fileImageDocumentVehicle = await http.MultipartFile.fromPath(
       'imageDocumentVehicle',
-      imageFile.path,
-      filename: imageFile.path.split('/').last,
+      imageDocumentVehicle.path,
+      filename: imageDocumentVehicle.path.split('/').last,
     );
 
-    request.files.add(file);
+    request.files.add(fileImageDocumentVehicle);
+
+    var fileImageProfile = await http.MultipartFile.fromPath(
+      'imageProfile',
+      imageProfile.path,
+      filename: imageProfile.path.split('/').last,
+    );
+
+    request.files.add(fileImageProfile);
 
     var streamedResponse = await request.send();
 

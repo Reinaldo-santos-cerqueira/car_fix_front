@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:car_fix/model/client_model.dart';
-import 'package:car_fix/model/service_model.dart';
 
 class ServiceProviderModel {
   List<String> listServicesID;

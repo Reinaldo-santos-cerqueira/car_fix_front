@@ -1,4 +1,3 @@
-import 'package:car_fix/components/inputs/text_form_field_withou_icon_custom.dart';
 import 'package:car_fix/model/service_model.dart';
 import 'package:car_fix/pages/signup_service_provider/signup_service_provider_controller.dart';
 import 'package:car_fix/utils/colors.dart';
@@ -19,12 +18,13 @@ class _StepsFormServiceState extends State<StepsFormService> {
     return Obx(() => (ListView.builder(
         itemCount: controller.listService.length,
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           ServiceModel service = controller.listService[index];
           return Form(
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Column(
                     children: [

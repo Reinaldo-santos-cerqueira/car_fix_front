@@ -15,12 +15,12 @@ class ClientServiceImpl extends ClientService {
   ClientServiceImpl({required this.clientRepository});
 
   @override
-  Future<String?> create(ClientModel clientData, XFile imageFile,
-      BuildContext context, Rx<bool> loadingBtn) async {
+  Future<String?> create(ClientModel clientData, XFile imageVehicle,
+      XFile imageProfile, BuildContext context, Rx<bool> loadingBtn) async {
     try {
       loadingBtn(true);
       http.Response response =
-          await clientRepository.create(clientData, imageFile);
+          await clientRepository.create(clientData, imageVehicle,imageProfile);
       if (response.statusCode == 201) {
         showDialogSuccess(
           title: "Criado com sucesso",
@@ -33,8 +33,12 @@ class ClientServiceImpl extends ClientService {
         return "Success";
       } else if (response.statusCode == 400) {
         var responseData = jsonDecode(response.body);
-        var errors = responseData['errors'];
-        throw CustomException(errors);
+        var errors = responseData['messages'];
+        throw CustomException(errors.toString());
+      }else if (response.statusCode == 409) {
+        var responseData = jsonDecode(response.body);
+        var errors = responseData['message'];
+        throw CustomException(errors.toString());
       } else {
         throw CustomException('Erro desconhecido: ${response.statusCode}');
       }

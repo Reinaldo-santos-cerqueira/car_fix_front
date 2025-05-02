@@ -8,13 +8,11 @@ import 'package:image_picker/image_picker.dart';
 class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<http.Response> create(ServiceProviderModel clientData,
-      XFile imageFileCnh, XFile imageFileDocumentVehicle) async {
+      XFile imageFileCnh, XFile imageFileDocumentVehicle,XFile imageFileProfile) async {
     var uri = Uri.parse('$urlMain/users/service_provider');
     var request = http.MultipartRequest('POST', uri);
 
     request.fields['data'] = jsonEncode(clientData.toJson());
-
-    print(json.encode(clientData.toJson()));
 
     var fileDocumentVehicle = await http.MultipartFile.fromPath(
       'imageDocumentVehicle',
@@ -26,10 +24,16 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     var fileCnh = await http.MultipartFile.fromPath(
       'imageCnh',
       imageFileCnh.path,
-      filename: imageFileDocumentVehicle.path.split('/').last,
+      filename: imageFileCnh.path.split('/').last,
     );
-
     request.files.add(fileCnh);
+
+    var fileProfileImage = await http.MultipartFile.fromPath(
+      'imageProfile',
+      imageFileProfile.path,
+      filename: imageFileProfile.path.split('/').last,
+    );
+    request.files.add(fileProfileImage);
 
     var streamedResponse = await request.send();
 

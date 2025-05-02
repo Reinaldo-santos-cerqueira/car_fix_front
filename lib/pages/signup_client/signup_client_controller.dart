@@ -49,6 +49,11 @@ class SignUpClientController extends GetxController {
   final filePathDocumentVehicle = "".obs;
   final txtErrorDocumentVehicle = "".obs;
 
+  final textBtnImgProfile = "Foto de perfil obrigatória".obs;
+  final Rx<XFile?> fileProfile = Rx<XFile?>(null);
+  final filePathProfile = "".obs;
+  final txtErrorProfile = "".obs;
+
   final FocusNode focusNodeCep = FocusNode();
 
   final loadingBtn = false.obs;
@@ -100,7 +105,11 @@ class SignUpClientController extends GetxController {
         } else if (fileDocumentVehicle.value == null) {
           txtErrorDocumentVehicle.value = "Documento do carro é obrigatório";
           return;
+        }else if (fileProfile.value == null) {
+          txtErrorProfile.value = "Foto de perfil é obrigatório";
+          return;
         }
+
 
         String cpfFormatted = textEditingControllerIdentifier.text
             .replaceAll(".", "")
@@ -136,7 +145,7 @@ class SignUpClientController extends GetxController {
           vehicle: vehicle,
         );
 
-        clientService.create(user, fileDocumentVehicle.value!, context, loadingBtn);
+        clientService.create(user, fileDocumentVehicle.value!,fileProfile.value!, context, loadingBtn);
       }
     }
   }

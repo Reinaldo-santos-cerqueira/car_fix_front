@@ -4,5 +4,5 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 abstract class ClientService {
-  Future<String?> create(ClientModel clientData, XFile imageFile,BuildContext context, Rx<bool> loadingBtn);
+  Future<String?> create(ClientModel clientData, XFile imageVehicle,  XFile imageFileDocumentVehicle, BuildContext context, Rx<bool> loadingBtn);
 }

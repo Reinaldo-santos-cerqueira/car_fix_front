@@ -101,6 +101,15 @@ class StepsFormPersonal extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          PickerImage(
+            txtError: controller.txtErrorProfile,
+            textBtn: controller.textBtnImgProfile,
+            file: controller.fileProfile,
+            filePath: controller.filePathProfile,
+          ),
           typeServiceProvider
               ? Column(
                   children: [
@@ -125,7 +134,7 @@ class StepsFormPersonal extends StatelessWidget {
                       textBtn: controller.textBtnImgCnh,
                       file: controller.fileCnh,
                       filePath: controller.filePathCnh,
-                    )
+                    ),
                   ],
                 )
               : Container()
