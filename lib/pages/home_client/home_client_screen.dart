@@ -290,6 +290,7 @@ class HomeClientScreen extends GetView<HomeClientController> {
                                                             '/confirm_request',
                                                             arguments:
                                                                 ConfirmRequestArgumentsModel(
+                                                                  null,
                                                               serviceId:
                                                                   service.id,
                                                               latitude: controller
@@ -300,7 +301,6 @@ class HomeClientScreen extends GetView<HomeClientController> {
                                                                   .currentPosition
                                                                   .value
                                                                   .longitude,
-                                                              address: "${controller.street.value}, ${controller.neighborhood.value}",
                                                             ),
                                                           );
                                                         },
