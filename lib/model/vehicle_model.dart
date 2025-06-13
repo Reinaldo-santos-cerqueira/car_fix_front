@@ -18,11 +18,11 @@ class VehicleModel {
   factory VehicleModel.fromJson(Map<String, dynamic> json) {
     return VehicleModel(
       json['id'],
-      model: json['model'],
-      mark: json['mark'],
-      plate: json['plate'],
-      color: json['color'],
-      pathToDocument: json['path_to_document'],
+      model: json['model'] ?? "",
+      mark: json['mark'] ?? "",
+      plate: json['plate'] ?? "",
+      color: json['color'] ?? "",
+      pathToDocument: json['path_to_document'] ?? "",
     );
   }
 
