@@ -42,29 +42,30 @@ class ConfirmRequestScreen extends GetView<ConfirmRequestController> {
                           VehicleModel vehicle = controller.vehicles[index];
                           return Obx(() {
                             return Container(
-                              decoration: controller.vehicleSelect.value == vehicle.id
+                              decoration: controller.vehicleSelect.value ==
+                                      vehicle.id
                                   ? BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.black,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.white54,
-                                    blurRadius: 5.0,
-                                    spreadRadius: 1,
-                                  )
-                                ],
-                              )
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.black,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.white54,
+                                          blurRadius: 5.0,
+                                          spreadRadius: 1,
+                                        )
+                                      ],
+                                    )
                                   : BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black87,
-                                    blurRadius: 1.0,
-                                    spreadRadius: 1.0,
-                                  )
-                                ],
-                              ),
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.black87,
+                                          blurRadius: 1.0,
+                                          spreadRadius: 1.0,
+                                        )
+                                      ],
+                                    ),
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(10),
                                 onTap: () {
@@ -73,7 +74,8 @@ class ConfirmRequestScreen extends GetView<ConfirmRequestController> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(20.0),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Transform.rotate(
                                         angle: pi / 4,
@@ -90,7 +92,8 @@ class ConfirmRequestScreen extends GetView<ConfirmRequestController> {
                                       ),
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             RichText(
                                               maxLines: 1,
@@ -102,7 +105,8 @@ class ConfirmRequestScreen extends GetView<ConfirmRequestController> {
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       color: Color(0xFFE1E1E1),
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                   TextSpan(
@@ -129,7 +133,8 @@ class ConfirmRequestScreen extends GetView<ConfirmRequestController> {
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       color: Color(0xFFE1E1E1),
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                   TextSpan(
@@ -156,7 +161,8 @@ class ConfirmRequestScreen extends GetView<ConfirmRequestController> {
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       color: Color(0xFFE1E1E1),
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                   TextSpan(
@@ -183,7 +189,8 @@ class ConfirmRequestScreen extends GetView<ConfirmRequestController> {
                                                     style: TextStyle(
                                                       fontSize: 14,
                                                       color: Color(0xFFE1E1E1),
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                   TextSpan(
@@ -217,7 +224,9 @@ class ConfirmRequestScreen extends GetView<ConfirmRequestController> {
                 },
                 text: "Selecione o carro ",
               ),
-              const SizedBox(height: 20,)
+              const SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),
@@ -225,4 +234,3 @@ class ConfirmRequestScreen extends GetView<ConfirmRequestController> {
     });
   }
 }
-
