@@ -80,7 +80,6 @@ class HomeClientScreen extends GetView<HomeClientController> {
                         ),
                       ],
                     ),
-                    // Overlay with location details
                     Padding(
                       padding:
                           const EdgeInsets.only(right: 20, left: 20, top: 100),
@@ -233,9 +232,8 @@ class HomeClientScreen extends GetView<HomeClientController> {
                                                               ),
                                                             ),
                                                             TextSpan(
-                                                              text: service
-                                                                  .priceService
-                                                                  .toString(),
+                                                              text:
+                                                                  " ${service.priceService.toStringAsFixed(2)}",
                                                               style:
                                                                   const TextStyle(
                                                                 fontSize: 14,
@@ -265,9 +263,8 @@ class HomeClientScreen extends GetView<HomeClientController> {
                                                               ),
                                                             ),
                                                             TextSpan(
-                                                              text: service
-                                                                  .priceKmTraveled
-                                                                  .toString(),
+                                                              text:
+                                                                  " ${service.priceKmTraveled.toStringAsFixed(2)}",
                                                               style:
                                                                   const TextStyle(
                                                                 fontSize: 14,
@@ -290,7 +287,7 @@ class HomeClientScreen extends GetView<HomeClientController> {
                                                             '/confirm_request',
                                                             arguments:
                                                                 ConfirmRequestArgumentsModel(
-                                                                  null,
+                                                              null,
                                                               serviceId:
                                                                   service.id,
                                                               latitude: controller
