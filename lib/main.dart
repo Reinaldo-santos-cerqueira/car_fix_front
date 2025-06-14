@@ -7,6 +7,7 @@ import 'package:car_fix/pages/search_provider_service/search_service_provider_mo
 import 'package:car_fix/pages/signup_client/signup_client_module.dart';
 import 'package:car_fix/pages/signup_service_provider/signup_service_provider_module.dart';
 import 'package:car_fix/pages/trade_password/change_password_module.dart';
+import 'package:car_fix/pages/waiting_service_provider/waiting_service_provider_module.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         ...HomeClientModule().routers,
         ...ConfirmRequestModule().routers,
         ...SearchServiceProviderModule().routers,
+        ...WaitingServiceProviderModule().routers
       ],
       builder: EasyLoading.init(),
     );
