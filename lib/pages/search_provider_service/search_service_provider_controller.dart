@@ -30,12 +30,9 @@ class SearchServiceProviderController extends GetxController {
       'autoConnect': true,
     });
     socket.connect();
+    print("Connected");
 
-    socket.onConnect((_) {
-      if (listServiceRequestedAcceptProviderModel.isEmpty) {
-        requestService();
-      }
-    });
+    requestService();
 
     socket.on("accepted_service", (msg) {
       ServiceRequestedAcceptProviderModel serviceRequestedAcceptProvider =
@@ -57,32 +54,32 @@ class SearchServiceProviderController extends GetxController {
     });
 
     timer = Timer.periodic(const Duration(minutes: 2), (timer) {
-      if (listServiceRequestedAcceptProviderModel.isEmpty) {
-        requestService();
-      }
+      requestService();
     });
   }
 
   void requestService() {
-    if (serviceRequestedId.value == "") {
-      socket.emit('request_service', {
-        "service_id": args.serviceId,
-        "user_id_client": userId.value,
-        "latitude_client": args.latitude,
-        "longitude_client": args.longitude,
-        "status": 0,
-        "vehicle_id_client": args.vehicle!.id
-      });
-    } else {
-      socket.emit('request_service', {
-        "service_id": args.serviceId,
-        "user_id_client": userId.value,
-        "latitude_client": args.latitude,
-        "longitude_client": args.longitude,
-        "status": 0,
-        "vehicle_id_client": args.vehicle!.id,
-        "id": serviceRequestedId.value
-      });
+    if (listServiceRequestedAcceptProviderModel.isEmpty) {
+      if (serviceRequestedId.value == "") {
+        socket.emit('request_service', {
+          "service_id": args.serviceId,
+          "user_id_client": userId.value,
+          "latitude_client": args.latitude,
+          "longitude_client": args.longitude,
+          "status": 0,
+          "vehicle_id_client": args.vehicle!.id
+        });
+      } else {
+        socket.emit('request_service', {
+          "service_id": args.serviceId,
+          "user_id_client": userId.value,
+          "latitude_client": args.latitude,
+          "longitude_client": args.longitude,
+          "status": 0,
+          "vehicle_id_client": args.vehicle!.id,
+          "id": serviceRequestedId.value
+        });
+      }
     }
   }
 
@@ -97,7 +94,6 @@ class SearchServiceProviderController extends GetxController {
 
   @override
   void onClose() {
-    // socket.dispose();
     super.onClose();
   }
 }
