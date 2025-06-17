@@ -52,9 +52,6 @@ class HomeClientController extends GetxController {
               .listen((Position? position) async {
         if (position == null) return;
 
-        print("Latitude: ${position.latitude}");
-        print("Longitude: ${position.longitude}");
-
         currentPosition.value = LatLng(position.latitude, position.longitude);
         mapController.move(currentPosition.value, 17.0);
 
@@ -66,15 +63,14 @@ class HomeClientController extends GetxController {
           neighborhood.value = placemark.subLocality ?? "";
         }
       });
-
-      loading(false);
     } catch (e) {
       print("Erro ao obter o placemark: $e");
+    } finally {
+      loading(false);
     }
   }
 
   Future<bool> checkLocationPermission() async {
-    loading(true);
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
@@ -89,6 +85,7 @@ class HomeClientController extends GetxController {
   }
 
   Future<void> getServices() async {
+    loading(true);
     List<ServiceModel>? listReturnService =
         await servicesService.get(Get.context!);
     listService.value = listReturnService!;
