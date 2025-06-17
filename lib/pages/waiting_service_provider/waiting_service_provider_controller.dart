@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:car_fix/model/chat_args_model.dart';
 import 'package:car_fix/model/service_requested_accept_provider.dart';
 import 'package:car_fix/utils/dialogs.dart';
 import 'package:flutter/material.dart';
@@ -175,6 +176,19 @@ class WaitingServiceProviderController extends GetxController {
         }
       },
       title: 'Tem certeza que quer cancelar?',
+    );
+  }
+
+  void goChatServiceScreen() {
+    Get.toNamed(
+      "chat_service",
+      arguments: ChatArgsModel(
+        type: "client",
+        socket: socket,
+        id: args.id!,
+        userIdClient: args.userIdClient,
+        userIdProviderService: args.userIdProviderService,
+      ),
     );
   }
 }

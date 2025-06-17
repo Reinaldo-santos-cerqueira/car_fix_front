@@ -1,3 +1,4 @@
+import 'package:car_fix/pages/chat_service/chat_service_module.dart';
 import 'package:car_fix/pages/confirm_request/confirm_request_module.dart';
 import 'package:car_fix/pages/home_client/home_client_module.dart';
 import 'package:car_fix/pages/home_service_provider/home_service_provider_module.dart';
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
         ...HomeClientModule().routers,
         ...ConfirmRequestModule().routers,
         ...SearchServiceProviderModule().routers,
-        ...WaitingServiceProviderModule().routers
+        ...WaitingServiceProviderModule().routers,
+        ...ChatServiceModule().routers,
       ],
       builder: EasyLoading.init(),
     );
