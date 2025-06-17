@@ -52,14 +52,15 @@ class PickerImage extends StatelessWidget {
                       const SizedBox(
                         height: 5,
                       ),
-                      txtError.value != "" ? Text(
-                        txtError.value,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Color.fromARGB(255, 196, 16, 3),
-                        ),
-                      )
-                      : Container()
+                      txtError.value != ""
+                          ? Text(
+                              txtError.value,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Color.fromARGB(255, 196, 16, 3),
+                              ),
+                            )
+                          : Container()
                     ],
                   ),
                 ),
@@ -82,11 +83,13 @@ class PickerImage extends StatelessWidget {
                         Expanded(
                           child: InkWell(
                             onTap: () async {
-                              file.value = await picker.pickImage(
+                              final pickedFile = await picker.pickImage(
                                   source: ImageSource.gallery);
-                              if (file.value != null) {
-                                filePath!.value = file.value!.path;
+                              if (pickedFile != null) {
+                                file.value = pickedFile;
+                                filePath?.value = pickedFile.path;
                                 textBtn.value = "Imagem escolhida";
+                                txtError.value = "";
                                 Navigator.pop(context);
                               }
                             },
